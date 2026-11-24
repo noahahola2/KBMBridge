@@ -1,0 +1,44 @@
+[package]
+name = "kbmbridge"
+version = "0.1.0"
+description = "Keyboard & mouse to controller bridge"
+edition = "2021"
+
+[lib]
+name = "kbmbridge_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-opener = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+vigem-client = { version = "0.1.4", features = ["unstable_ds4"] }
+arc-swap = "1"
+crossbeam-queue = "0.3"
+parking_lot = "0.12"
+
+[dependencies.windows-sys]
+version = "0.59"
+features = [
+  "Win32_Foundation",
+  "Win32_UI_WindowsAndMessaging",
+  "Win32_UI_Input",
+  "Win32_UI_Input_KeyboardAndMouse",
+  "Win32_System_LibraryLoader",
+  "Win32_System_Threading",
+  "Win32_System_Performance",
+  "Win32_Media",
+  "Win32_Security",
+  "Win32_Graphics_Gdi",
+]
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
